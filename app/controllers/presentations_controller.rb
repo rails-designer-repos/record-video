@@ -14,7 +14,8 @@ class PresentationsController < ApplicationController
   end
 
   def update
-    presentation = Presentation.find(params[:id]).update(presentation_params)
+    presentation = Presentation.find(params[:id])
+    presentation.update(presentation_params)
 
     redirect_to edit_presentation_path(presentation)
   end

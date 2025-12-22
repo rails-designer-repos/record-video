@@ -1,3 +1,36 @@
 <h1>Record: <%= @presentation.title %></h1>
+<% if @presentation.video.attached? %>
+  <div>
+    <h2>Current recording</h2>
 
-<p>Video recording feature will go here</p>
+    <%= video_tag @presentation.video, width: "640", controls: true %>
+    <hr>
+  </div>
+<% end %>
+
+<div data-controller="recorder">
+  <h2>New Recording</h2>
+  <div>
+    <button type="button" data-recorder-target="modeButton" data-action="click->recorder#selectMode" data-recorder-mode-param="webcam">Webcam</button>
+    <button type="button" data-recorder-target="modeButton" data-action="click->recorder#selectMode" data-recorder-mode-param="screen">Screen</button>
+    <button type="button" data-recorder-target="modeButton" data-action="click->recorder#selectMode" data-recorder-mode-param="pip">Picture-in-picture</button>
+  </div>
+
+  <video data-recorder-target="preview" width="640" height="480"></video>
+
+  <div>
+    <button type="button" data-recorder-target="startButton" data-action="recorder#start">Start recording</button>
+    <button type="button" data-recorder-target="stopButton" data-action="recorder#stop" disabled>Stop recording</button>
+  </div>
+
+  <h2>Preview</h2>
+  <video data-recorder-target="video" width="640" height="480" controls></video>
+
+  <%= form_with model: @presentation, data: { recorder_target: "form" } do |form| %>
+    <%= form.file_field :video, data: { recorder_target: "videoInput" }, hidden: true %>
+
+    <button type="button" data-action="click->recorder#save">
+      Save recording
+    </button>
+  <% end %>
+</div>
