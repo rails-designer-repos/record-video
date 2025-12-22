@@ -1,3 +1,5 @@
 Rails.application.routes.draw do
-  root to: "pages#show"
+  resources :presentations, only: %w[new create edit update]
+
+  root "presentations#new"
 end
