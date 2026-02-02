@@ -3,7 +3,7 @@
   <div>
     <h2>Current recording</h2>
 
-    <%= video_tag @presentation.video, width: "640", controls: true %>
+    <%= video_tag @presentation.video, width: "640", preload: "metadata", controls: true %>
     <hr>
   </div>
 <% end %>

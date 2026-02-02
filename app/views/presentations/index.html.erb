@@ -1,0 +1,22 @@
+<h1>Presentations</h1>
+
+<%= link_to "Create new presentation", new_presentation_path %>
+
+<ul>
+  <% @presentations.each do |presentation| %>
+    <li>
+      <%= link_to [:edit, presentation] do %>
+        <p><%= presentation.title %></p>
+
+        <%= video_tag presentation.video,
+          width: "160",
+          poster: (presentation.video.representable? ? url_for(presentation.video.representation(resize: "160x120")) : nil),
+          data: {
+            controller: "preview",
+            action: "mouseenter->preview#play mouseleave->preview#pause"
+          }
+        %>
+      <% end %>
+    </li>
+  <% end %>
+</ul>
